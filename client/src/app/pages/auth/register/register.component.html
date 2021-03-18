@@ -1,0 +1,43 @@
+<div id="register" class="section">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-12 col-md-6 col-xl-4">
+
+				<div class="alert alert-info" role="alert" *ngIf="loading">
+				  Loading..
+				</div>
+
+				<div class="alert alert-success" role="alert" *ngIf="success">
+				  user saved!
+				</div>
+
+				<form [formGroup]="registerForm" (ngSubmit)="store()" novalidate>
+				  <div class="mb-3">
+				    <label class="form-label">Name</label>
+				    <input type="text" formControlName="name" class="form-control" placeholder="Your name here">
+
+				    <div  class="form-text text-danger" *ngIf="_messageValidation.getError('name',registerForm)">
+				    	{{_messageValidation.getError('name',registerForm,'Nombre')}}
+				    </div>
+
+				  </div>
+
+				  <div class="mb-3">
+				    <label class="form-label">Email</label>
+				    <input type="email" formControlName="email" class="form-control" placeholder="Your email here">
+				    <div  class="form-text text-danger" *ngIf="_messageValidation.getError('email',registerForm)">{{_messageValidation.getError('email',registerForm,'Email')}}.</div>
+				    
+				  </div>
+
+				  <div class="mb-3">
+				    <label class="form-label">Password</label>
+				    <input type="password" formControlName="password" class="form-control" placeholder="Your password here">
+				    <div  class="form-text text-danger" *ngIf="_messageValidation.getError('password',registerForm)">{{_messageValidation.getError('password',registerForm,'Contraseña')}}.</div>
+				  </div>
+				 
+				  <button type="submit" class="btn btn-primary">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>		
+</div>

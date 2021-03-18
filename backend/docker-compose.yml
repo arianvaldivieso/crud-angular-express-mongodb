@@ -1,0 +1,48 @@
+version: '3.6'
+services:
+  web:
+    build: .
+    command: npm run dev
+    volumes:
+      - ./:/usr/app/
+    ports:
+      - "3000:3000"
+    networks:
+      - mongo_net
+
+    environment:
+      - MONGO_SERVER=mongodb
+      - MONGO_INITDB_DATABASE=crud-express-mongo
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+      - TOKEN_SECRET=token123456789
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:4.2.3-bionic
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      # seeding scripts
+      # named volumes
+      - mongodb:/data/db
+      - mongoconfig:/data/configdb
+    networks:
+      - mongo_net
+    command: [--auth]
+
+volumes:
+  # default dir on Ubuntu: /var/lib/docker/volumes
+  mongodb:
+  mongoconfig:
+
+networks:
+  mongo_net:
+    driver: bridge
+    
+   
